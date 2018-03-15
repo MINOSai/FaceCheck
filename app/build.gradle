@@ -32,4 +32,21 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
     implementation 'com.android.support:cardview-v7:26.1.0'
     implementation 'com.android.support:recyclerview-v7:26.1.0'
+
+    // Room
+    implementation "android.arch.persistence.room:runtime:1.0.0"
+    kapt "android.arch.persistence.room:compiler:1.0.0"
+
+    // LiveData
+    implementation "android.arch.lifecycle:livedata:1.1.0"
+
+    // OkHTTP
+    compile "com.squareup.okhttp3:okhttp:3.10.0"
+    compile "com.squareup.okhttp3:logging-interceptor:3.10.0"
+
+    // RetroFit
+    compile ("com.squareup.retrofit2:retrofit:2.4.0"){
+        exclude module: 'okhttp'
+    }
+    compile "com.squareup.retrofit2:converter-gson:2.4.0"
 }

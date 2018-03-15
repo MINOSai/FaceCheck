@@ -1,4 +1,4 @@
-package com.minosai.facecheck.Activities.Main
+package com.minosai.facecheck.activities.main
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
