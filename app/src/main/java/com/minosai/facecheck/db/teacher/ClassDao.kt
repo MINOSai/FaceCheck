@@ -1,16 +1,17 @@
-package com.minosai.facecheck.activities.main.fragments.teacher
+package com.minosai.facecheck.db.teacher
 
 import android.arch.persistence.room.Dao
 import android.arch.persistence.room.Insert
 import android.arch.persistence.room.OnConflictStrategy.REPLACE
 import android.arch.persistence.room.Query
+import com.minosai.facecheck.models.Class
 
 /**
  * Created by minos.ai on 16/03/18.
  */
 
 @Dao
-public interface ClassDao {
+interface ClassDao {
 
     @Insert(onConflict = REPLACE)
     fun save(vararg mClass: Class)
