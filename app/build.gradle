@@ -49,4 +49,8 @@ dependencies {
         exclude module: 'okhttp'
     }
     compile "com.squareup.retrofit2:converter-gson:2.4.0"
+
+    // anko
+    compile "org.jetbrains.anko:anko:0.10.4"
+    implementation 'com.android.support:design:26.1.0'
 }

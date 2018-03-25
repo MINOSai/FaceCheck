@@ -11,12 +11,8 @@ import com.google.gson.annotations.SerializedName
 @Entity
 data class Class (
         @PrimaryKey
-        @SerializedName("course_code")
-        var code: String,
-        @SerializedName("course_title")
-        var title: String,
-        @SerializedName("class_venue")
-        var venue: String,
-        @SerializedName("class_slot")
-        var slot: String
+        @SerializedName("course_code") var code: String = "",
+        @SerializedName("course_title") var title: String = "",
+        @SerializedName("class_venue") var venue: String = "",
+        @SerializedName("class_slot") var slot: String = ""
 )
