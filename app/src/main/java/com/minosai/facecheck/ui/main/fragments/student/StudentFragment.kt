@@ -115,9 +115,9 @@ class StudentFragment : Fragment() {
     private fun uploadImage() {
         toast("Bleh!!")
         val requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), imgFile)
-        val body = MultipartBody.Part.createFormData("filefieldname", imgFile.name, requestFile)
+        val body = MultipartBody.Part.createFormData("img", imgFile.name, requestFile)
         val token: String? = prefs[Constants.PREF_TOKEN]
-        val call = webService.uploadImage("  $token", body)
+        val call = webService.uploadImage("jwt $token", body)
         call.enqueue(object : Callback<UploadResponse> {
             override fun onResponse(call: Call<UploadResponse>?, response: Response<UploadResponse>?) {
                 response?.let {

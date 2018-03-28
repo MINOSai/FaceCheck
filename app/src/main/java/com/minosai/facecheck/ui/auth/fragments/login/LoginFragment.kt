@@ -79,11 +79,12 @@ class LoginFragment : Fragment() {
     }
 
     private fun getUserData(token: String) {
-        var call: Call<User> = webService.getUserDetails(token)
+        var call: Call<User> = webService.getUserDetails("jwt $token")
         call.enqueue(object : Callback<User>{
             override fun onFailure(call: Call<User>?, t: Throwable?) { }
 
             override fun onResponse(call: Call<User>?, response: Response<User>?) {
+                AnkoLogger("BODY RESPONSE").info(response?.body().toString())
                 response?.let {
                     if(it.isSuccessful) {
                         storeUser(response.body())
@@ -94,13 +95,16 @@ class LoginFragment : Fragment() {
     }
 
     private fun storeUser(body: User?) {
+        AnkoLogger("USER DETAILS").info(body.toString())
         var gson = Gson()
-        prefs.set(
-                Constants.KEY_USER,
-                gson.toJson(body)
-        )
-        val intent = Intent(context, MainActivity::class.java)
-        intent.putExtra(Constants.KEY_ISTEACHER, body?.isTeacher)
-        startActivity(intent)
+        body?.let {
+            prefs.set(
+                    Constants.KEY_USER,
+                    gson.toJson(it)
+            )
+            val intent = Intent(context, MainActivity::class.java)
+            intent.putExtra(Constants.KEY_ISTEACHER, it.isTeacher)
+            startActivity(intent)
+        }
     }
 }
