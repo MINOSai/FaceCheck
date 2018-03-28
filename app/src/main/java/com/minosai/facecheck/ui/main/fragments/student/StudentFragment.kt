@@ -1,8 +1,7 @@
-package com.minosai.facecheck.ui.main.fragments
+package com.minosai.facecheck.ui.main.fragments.student
 
 import android.Manifest
 import android.app.Activity.RESULT_OK
-import android.app.ProgressDialog
 import android.content.Intent
 import android.content.SharedPreferences
 import android.content.pm.PackageManager
@@ -13,11 +12,9 @@ import android.provider.MediaStore
 import android.support.v4.app.ActivityCompat
 import android.support.v4.app.Fragment
 import android.support.v4.content.ContextCompat
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import com.minosai.facecheck.R
 import com.minosai.facecheck.api.WebService
 import com.minosai.facecheck.models.api.UploadResponse
@@ -120,7 +117,7 @@ class StudentFragment : Fragment() {
         val requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), imgFile)
         val body = MultipartBody.Part.createFormData("filefieldname", imgFile.name, requestFile)
         val token: String? = prefs[Constants.PREF_TOKEN]
-        val call = webService.uploadImage("jwt $token", body)
+        val call = webService.uploadImage("  $token", body)
         call.enqueue(object : Callback<UploadResponse> {
             override fun onResponse(call: Call<UploadResponse>?, response: Response<UploadResponse>?) {
                 response?.let {
