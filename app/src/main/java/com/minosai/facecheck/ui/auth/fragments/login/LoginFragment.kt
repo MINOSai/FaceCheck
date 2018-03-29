@@ -15,11 +15,13 @@ import com.minosai.facecheck.api.WebService
 import com.minosai.facecheck.models.User
 import com.minosai.facecheck.models.api.Token
 import com.minosai.facecheck.models.api.UserLogin
+import com.minosai.facecheck.ui.auth.fragments.signup.SignupFragment
 import com.minosai.facecheck.ui.main.MainActivity
 import com.minosai.facecheck.utils.Constants
 import com.minosai.facecheck.utils.PreferenceHelper
 import com.minosai.facecheck.utils.PreferenceHelper.get
 import com.minosai.facecheck.utils.PreferenceHelper.set
+import com.minosai.facecheck.utils.inTransaction
 import kotlinx.android.synthetic.main.fragment_login.*
 import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.info
@@ -47,6 +49,12 @@ class LoginFragment : Fragment() {
 
         button_login.setOnClickListener {
             login()
+        }
+
+        text_signup.setOnClickListener {
+            fragmentManager.inTransaction {
+                replace(R.id.auth_famelayout, SignupFragment())
+            }
         }
     }
 

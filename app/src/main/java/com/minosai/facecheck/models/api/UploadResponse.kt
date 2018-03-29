@@ -7,5 +7,6 @@ import com.google.gson.annotations.SerializedName
  */
 data class UploadResponse (
         @SerializedName("student") val student: Int,
+        @SerializedName("teacher") val teacher: Int,
         @SerializedName("img") val imgUrl: String
 )

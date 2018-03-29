@@ -30,6 +30,14 @@ interface WebService {
     @POST("upload/")
     fun uploadImage(@Header("Authorization") token: String, @Part image: MultipartBody.Part) : Call<UploadResponse>
 
+    @Multipart
+    @POST("photo/")
+    fun teacherUploadPhoto(@Header("Authorization") token: String, @Part image: MultipartBody.Part, @Body courseCode: String): Call<UploadResponse>
+
+    @Multipart
+    @POST("photo/")
+    fun studentUploadPhoto(@Header("Authorization") token: String, @Part image: MultipartBody.Part): Call<UploadResponse>
+
     companion object {
         fun create(): WebService {
             val retrofit = Retrofit.Builder()

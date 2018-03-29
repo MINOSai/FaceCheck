@@ -25,6 +25,7 @@ class ClassListAdapter(
     class ClassHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(mClass: Class, listener: (Class) -> Unit) = with(itemView) {
             //TODO: bind data to views
+
         }
     }
 
