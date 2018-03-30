@@ -12,7 +12,10 @@ import com.google.gson.annotations.SerializedName
 data class Class (
         @PrimaryKey
         @SerializedName("course_code") var code: String = "",
-        @SerializedName("course_title") var title: String = "",
-        @SerializedName("class_venue") var venue: String = "",
-        @SerializedName("class_slot") var slot: String = ""
+        @SerializedName("course_name") var title: String = "",
+        @SerializedName("course_venue") var venue: String = "",
+        @SerializedName("course_slot") var slot: String = "",
+        @SerializedName("course_room") var room: String = "",
+        @SerializedName("teacher") var teacher: String = "",
+        @SerializedName("course_id") var id: Int = 0
 )

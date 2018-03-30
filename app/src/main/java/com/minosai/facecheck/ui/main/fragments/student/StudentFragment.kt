@@ -113,7 +113,6 @@ class StudentFragment : Fragment() {
     }
 
     private fun uploadImage() {
-        toast("Bleh!!")
         val requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), imgFile)
         val body = MultipartBody.Part.createFormData("img", imgFile.name, requestFile)
         val token: String? = prefs[Constants.PREF_TOKEN]

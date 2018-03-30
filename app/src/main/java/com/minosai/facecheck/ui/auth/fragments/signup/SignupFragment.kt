@@ -73,9 +73,6 @@ class SignupFragment : Fragment() {
                                     gson.toJson(it)
                             )
                             saveToken()
-                            val intent = Intent(context, MainActivity::class.java)
-                            intent.putExtra(Constants.KEY_ISTEACHER, it.isTeacher)
-                            startActivity(intent)
                         }
                     }
                 }
@@ -98,6 +95,9 @@ class SignupFragment : Fragment() {
                 response?.let {
                     if (response.isSuccessful) {
                         prefs.set(Constants.PREF_TOKEN, response.body()?.token)
+                        val intent = Intent(context, MainActivity::class.java)
+                        intent.putExtra(Constants.KEY_ISTEACHER, radio_teacher.isChecked)
+                        startActivity(intent)
                     }
                 }
             }

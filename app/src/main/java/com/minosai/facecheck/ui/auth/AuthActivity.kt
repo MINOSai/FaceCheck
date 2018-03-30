@@ -16,4 +16,8 @@ class AuthActivity : AppCompatActivity() {
             replace(R.id.auth_famelayout, LoginFragment())
         }
     }
+
+    override fun onBackPressed() {
+        moveTaskToBack(true)
+    }
 }

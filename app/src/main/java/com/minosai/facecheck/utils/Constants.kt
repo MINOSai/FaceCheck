@@ -11,5 +11,6 @@ object Constants {
     const val PICK_IMAGE_ID: Int = 123
     const val RC_SOTRAGE_PERMISSION: Int = 456
     const val KEY_USER: String = "com.minosai.facecheck.key_user"
-    val KEY_ISTEACHER: String = "com.minosai.facecheck.key_isteacher"
+    const val KEY_ISTEACHER: String = "com.minosai.facecheck.key_isteacher"
+    const val COURSE_ID: String = "COURSE_ID"
 }
