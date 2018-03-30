@@ -6,6 +6,8 @@ import android.util.Base64
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import com.squareup.picasso.Picasso
 import retrofit2.Call
 import org.json.JSONException
 import org.json.JSONObject

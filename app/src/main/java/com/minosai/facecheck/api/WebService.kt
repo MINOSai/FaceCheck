@@ -1,6 +1,8 @@
 package com.minosai.facecheck.api
 
 import com.google.gson.Gson
+import com.minosai.facecheck.models.Class
+import com.minosai.facecheck.models.Student
 import com.minosai.facecheck.models.User
 import com.minosai.facecheck.models.api.*
 import okhttp3.MultipartBody
@@ -23,9 +25,9 @@ interface WebService {
     @GET("user/view/")
     fun getUserDetails(@Header("Authorization") token: String) : Call<User>
 
-    @Multipart
-    @POST("upload/")
-    fun uploadImage(@Header("Authorization") token: String, @Part image: MultipartBody.Part) : Call<UploadResponse>
+//    @Multipart
+//    @POST("upload/")
+//    fun uploadImage(@Header("Authorization") token: String, @Part image: MultipartBody.Part) : Call<UploadResponse>
 
     @Multipart
     @POST("photo/")
@@ -34,6 +36,18 @@ interface WebService {
     @Multipart
     @POST("photo/")
     fun studentUploadPhoto(@Header("Authorization") token: String, @Part image: MultipartBody.Part): Call<UploadResponse>
+
+    @GET("course/")
+    fun getCourses(@Header("Authorization") token: String): Call<List<Class>>
+
+    @GET("course/all/")
+    fun getAllCourses(@Header("Authorization") token: String): Call<List<Class>>
+
+    @PATCH("course/")
+    fun enrollStudent(@Header("Authorization") token: String, @Body courseId: CourseId): Call<Class>
+
+    @GET("student")
+    fun getStudentList(@Header("Authorization") token: String, @Body courseId: CourseId): Call<List<Student>>
 
     companion object {
         fun create(): WebService {

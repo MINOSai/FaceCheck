@@ -12,13 +12,13 @@ import android.provider.MediaStore
 import android.support.v4.app.ActivityCompat
 import android.support.v4.app.Fragment
 import android.support.v4.content.ContextCompat
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import com.minosai.facecheck.R
+import com.minosai.facecheck.adapter.ClassListAdapter
 import com.minosai.facecheck.api.WebService
 import com.minosai.facecheck.models.api.CourseId
 import com.minosai.facecheck.models.api.UploadResponse
+import com.minosai.facecheck.ui.auth.AuthActivity
 import com.minosai.facecheck.utils.Constants
 import com.minosai.facecheck.utils.PreferenceHelper
 import com.minosai.facecheck.utils.PreferenceHelper.get
@@ -27,6 +27,7 @@ import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.info
+import org.jetbrains.anko.support.v4.startActivity
 import org.jetbrains.anko.support.v4.toast
 import retrofit2.Call
 import retrofit2.Callback
@@ -43,8 +44,14 @@ class TeacherFragment : Fragment() {
     private lateinit var bitmap: Bitmap
     private lateinit var imgFile: File
     private var courseId: Int = 0
+    private lateinit var adapter: ClassListAdapter
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?) = inflater!!.inflate(R.layout.fragment_teacher, container, false)
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
+    }
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         webService = WebService.create()
@@ -54,6 +61,12 @@ class TeacherFragment : Fragment() {
     fun takePhoto() {
         val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
         startActivityForResult(intent, Constants.PICK_IMAGE_ID)
+
+        adapter = ClassListAdapter(context){
+            courseId = it.id
+            val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+            startActivityForResult(intent, Constants.PICK_IMAGE_ID)
+        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -81,7 +94,6 @@ class TeacherFragment : Fragment() {
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         when (requestCode) {
             Constants.RC_SOTRAGE_PERMISSION-> {
                 if (ActivityCompat.checkSelfPermission(context, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
@@ -97,7 +109,6 @@ class TeacherFragment : Fragment() {
         myDir.mkdirs()
         val fname = "ImageUpload.jpg"
         val file = File(myDir, fname)
-//        Log.i("IMAGE-SAVE", "" + file)
         if (file.exists())
             file.delete()
         try {
@@ -134,5 +145,24 @@ class TeacherFragment : Fragment() {
                 toast("Failed to upload")
             }
         })
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
+        inflater?.inflate(R.menu.menu_teacher, menu)
+        super.onCreateOptionsMenu(menu,inflater);
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        when(item?.itemId) {
+            R.id.action_logout -> {
+                with(prefs.edit()){
+                    remove(Constants.KEY_USER)
+                    remove(Constants.PREF_TOKEN)
+                    commit()
+                }
+                startActivity<AuthActivity>()
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 }

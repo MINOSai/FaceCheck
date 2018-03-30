@@ -44,7 +44,7 @@ class ClassListAdapter(
 
             linear_content_holder.setOnClickListener {
                 val intent = Intent(context, StudentListActivity::class.java)
-                intent.putExtra(Constants.COURSE_ID, id)
+                intent.putExtra(Constants.COURSE_ID, mClass.id)
                 context.startActivity(intent)
             }
         }

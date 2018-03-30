@@ -24,7 +24,7 @@ class StudentRepo {
         val requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), imgFile)
         val body = MultipartBody.Part.createFormData("filefieldname", imgFile.name, requestFile)
         val token: String? = token
-        val call = webService.uploadImage("  $token", body)
+        val call = webService.studentUploadPhoto("jwt $token", body)
         call.enqueue(object : Callback<UploadResponse> {
             override fun onResponse(call: Call<UploadResponse>?, response: Response<UploadResponse>?) {
                 response?.let {

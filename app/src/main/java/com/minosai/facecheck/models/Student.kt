@@ -11,5 +11,5 @@ data class Student (
 
 data class StudentUser(
         @SerializedName("first_name") var firstName: String = "",
-        @SerializedName("last_name") var lastNaame: String = ""
+        @SerializedName("last_name") var lastName: String = ""
 )

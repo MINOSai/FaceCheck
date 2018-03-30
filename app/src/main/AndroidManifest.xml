@@ -21,7 +21,9 @@
             </intent-filter>
         </activity>
         <activity android:name=".ui.auth.AuthActivity" />
-        <activity android:name=".ui.students.StudentListActivity"></activity>
+        <activity android:name=".ui.students.StudentListActivity" />
+        <activity android:name=".ui.main.fragments.student.enroll.EnrollActivity" />
+        <activity android:name=".ui.main.fragments.student.photos.StudentPhotoActivity"></activity>
     </application>
 
 </manifest>

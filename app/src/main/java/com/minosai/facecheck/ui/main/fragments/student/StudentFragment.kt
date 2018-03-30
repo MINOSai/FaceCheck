@@ -12,12 +12,12 @@ import android.provider.MediaStore
 import android.support.v4.app.ActivityCompat
 import android.support.v4.app.Fragment
 import android.support.v4.content.ContextCompat
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import com.minosai.facecheck.R
 import com.minosai.facecheck.api.WebService
 import com.minosai.facecheck.models.api.UploadResponse
+import com.minosai.facecheck.ui.auth.AuthActivity
+import com.minosai.facecheck.ui.main.fragments.student.photos.StudentPhotoActivity
 import com.minosai.facecheck.utils.Constants
 import com.minosai.facecheck.utils.PreferenceHelper
 import com.minosai.facecheck.utils.PreferenceHelper.get
@@ -27,6 +27,7 @@ import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.info
+import org.jetbrains.anko.support.v4.startActivity
 import org.jetbrains.anko.support.v4.toast
 import retrofit2.Call
 import retrofit2.Callback
@@ -44,6 +45,11 @@ class StudentFragment : Fragment() {
     private lateinit var imgFile: File
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?) = inflater!!.inflate(R.layout.fragment_student, container, false)
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
+    }
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         webService = WebService.create()
@@ -133,5 +139,25 @@ class StudentFragment : Fragment() {
                 toast("Failed to upload")
             }
         })
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
+        inflater?.inflate(R.menu.menu_student, menu)
+        super.onCreateOptionsMenu(menu,inflater);
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        when(item?.itemId) {
+            R.id.action_logout -> {
+                with(prefs.edit()){
+                    remove(Constants.KEY_USER)
+                    remove(Constants.PREF_TOKEN)
+                    commit()
+                }
+                startActivity<AuthActivity>()
+            }
+            R.id.action_photo -> startActivity<StudentPhotoActivity>()
+        }
+        return super.onOptionsItemSelected(item)
     }
 }
