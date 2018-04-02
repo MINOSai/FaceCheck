@@ -23,7 +23,11 @@ class PhotoListAdapter : RecyclerView.Adapter<PhotoListAdapter.PhotoHolder>() {
 
     class PhotoHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(photoUrl: String) = with(itemView) {
-            Picasso.get().load(photoUrl).into(image_student_upload)
+            Picasso.get()
+                    .load(photoUrl)
+                    .resize(50, 50)
+                    .centerCrop()
+                    .into(image_student_upload)
         }
     }
 

@@ -6,12 +6,14 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
+import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
 import android.support.v4.app.ActivityCompat
 import android.support.v4.app.Fragment
 import android.support.v4.content.ContextCompat
+import android.support.v4.content.FileProvider
 import android.support.v7.widget.LinearLayoutManager
 import android.view.*
 import com.minosai.facecheck.R
@@ -39,6 +41,7 @@ import retrofit2.Callback
 import retrofit2.Response
 import java.io.File
 import java.io.FileOutputStream
+import java.io.IOException
 
 /**
  * Created by minos.ai on 30/03/18.
@@ -50,6 +53,8 @@ class TeacherFragment : Fragment() {
     private lateinit var imgFile: File
     private var courseId: Int = 0
     private lateinit var adapter: ClassListAdapter
+    var mCurrentPhotoPath: String? = null
+    private var imageUri: Uri? = null
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?) = inflater!!.inflate(R.layout.fragment_teacher, container, false)
 
@@ -64,7 +69,7 @@ class TeacherFragment : Fragment() {
 
         adapter = ClassListAdapter(context,{
             courseId = it.id
-            takePhoto()
+            captureImage()
         })
         rv_teacher_course.adapter = adapter
         rv_teacher_course.layoutManager = LinearLayoutManager(context)
@@ -74,6 +79,11 @@ class TeacherFragment : Fragment() {
         fab_teacher.setOnClickListener {
             startActivity<AddCourseActivity>()
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        getCourses()
     }
 
     private fun getCourses() {
@@ -92,40 +102,29 @@ class TeacherFragment : Fragment() {
         })
     }
 
-    fun takePhoto() {
+    @Throws(IOException::class)
+    private fun createImageFile(): File {
+        // Create an image file name
+        val storageDir = context.getExternalFilesDir(Environment.getExternalStorageDirectory().toString())
+        val image = File.createTempFile("ImageUpload", ".jpg", storageDir)
+        mCurrentPhotoPath = image.getAbsolutePath()
+        return image
+    }
+
+    fun captureImage() {
         val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+        imageUri = FileProvider.getUriForFile(context,"com.minosai.facecheck.fileprovider", createImageFile())
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri)
         startActivityForResult(intent, Constants.PICK_IMAGE_ID)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if(resultCode == Activity.RESULT_OK) {
-            when(requestCode) {
-                Constants.PICK_IMAGE_ID -> {
-                    bitmap = data?.extras?.get("data") as Bitmap
-                    checkSavePic()
-                }
-            }
-        }
-    }
-
-    private fun checkSavePic() {
-        val permissionCheck = ContextCompat.checkSelfPermission(context, Manifest.permission.WRITE_EXTERNAL_STORAGE)
-        if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
-            if (ActivityCompat.shouldShowRequestPermissionRationale(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
-            } else {
-                ActivityCompat.requestPermissions(activity, arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), Constants.RC_SOTRAGE_PERMISSION)
-            }
-        } else {
-            savePic()
-        }
-    }
-
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
-        when (requestCode) {
-            Constants.RC_SOTRAGE_PERMISSION-> {
-                if (ActivityCompat.checkSelfPermission(context, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
-                    savePic()
+        when(requestCode) {
+            Constants.PICK_IMAGE_ID -> {
+                if(resultCode == Activity.RESULT_OK) {
+                    imgFile = File(imageUri.toString())
+                    uploadImage()
                 }
             }
         }
