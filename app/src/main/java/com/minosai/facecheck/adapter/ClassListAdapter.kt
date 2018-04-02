@@ -2,17 +2,14 @@ package com.minosai.facecheck.adapter
 
 import android.content.Context
 import android.content.Intent
-import android.support.v4.content.ContextCompat.startActivity
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.view.ViewGroup
 import com.minosai.facecheck.R
 import com.minosai.facecheck.models.Class
-import com.minosai.facecheck.ui.main.MainActivity
-import com.minosai.facecheck.ui.students.StudentListActivity
+import com.minosai.facecheck.ui.main.students.StudentListActivity
 import com.minosai.facecheck.utils.Constants
 import com.minosai.facecheck.utils.inflate
-import kotlinx.android.synthetic.main.fragment_signup.*
 import kotlinx.android.synthetic.main.row_class_list.view.*
 
 /**
@@ -25,7 +22,7 @@ class ClassListAdapter(
 
     private var classList: List<Class> = emptyList()
 
-    override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int) = ClassHolder(parent!!.inflate(R.layout.row_class_list))
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = ClassHolder(parent.inflate(R.layout.row_class_list))
 
     override fun getItemCount() = classList.size
 

@@ -1,9 +1,10 @@
-package com.minosai.facecheck.ui.students
+package com.minosai.facecheck.ui.main.students
 
 import android.content.SharedPreferences
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
+import android.view.MenuItem
 import com.minosai.facecheck.R
 import com.minosai.facecheck.adapter.StudentListAdapter
 import com.minosai.facecheck.api.WebService
@@ -30,7 +31,7 @@ class StudentListActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_student_list)
 
-        actionBar.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         webService = WebService.create()
         prefs = PreferenceHelper.defaultPrefs(this)
@@ -59,5 +60,12 @@ class StudentListActivity : AppCompatActivity() {
                 }
             }
         })
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        when(item?.itemId) {
+            android.R.id.home -> onBackPressed()
+        }
+        return super.onOptionsItemSelected(item)
     }
 }

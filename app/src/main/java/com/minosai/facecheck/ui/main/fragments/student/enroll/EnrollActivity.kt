@@ -5,6 +5,8 @@ import android.graphics.Bitmap
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
+import android.util.Log
+import android.view.MenuItem
 import com.minosai.facecheck.R
 import com.minosai.facecheck.adapter.EnrollListAdapter
 import com.minosai.facecheck.api.WebService
@@ -13,6 +15,7 @@ import com.minosai.facecheck.utils.Constants
 import com.minosai.facecheck.utils.PreferenceHelper
 import com.minosai.facecheck.utils.PreferenceHelper.get
 import kotlinx.android.synthetic.main.activity_enroll.*
+import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.toast
 import retrofit2.Call
 import java.io.File
@@ -30,7 +33,7 @@ class EnrollActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_enroll)
 
-        actionBar.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         webService = WebService.create()
         prefs = PreferenceHelper.defaultPrefs(this)
@@ -60,5 +63,12 @@ class EnrollActivity : AppCompatActivity() {
             }
 
         })
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        when(item?.itemId) {
+            android.R.id.home -> onBackPressed()
+        }
+        return super.onOptionsItemSelected(item)
     }
 }

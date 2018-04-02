@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import com.minosai.facecheck.R
 import com.minosai.facecheck.api.WebService
 import com.minosai.facecheck.models.Class
-import com.minosai.facecheck.models.User
 import com.minosai.facecheck.models.api.CourseId
 import com.minosai.facecheck.utils.Constants
 import com.minosai.facecheck.utils.PreferenceHelper
@@ -29,7 +28,7 @@ class EnrollListAdapter(
 
     private var courseList: List<Class> = emptyList()
 
-    override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int) = EnrollHolder(parent!!.inflate(R.layout.row_class_list))
+    override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int) = EnrollHolder(parent!!.inflate(R.layout.row_enroll_list))
 
     override fun getItemCount() = courseList.size
 
@@ -37,17 +36,17 @@ class EnrollListAdapter(
 
     class EnrollHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
         fun bind(course: Class, listener: (Class) -> Unit, context: Context) = with(itemView) {
-            text_course_name.text = course.title
-            text_course_code.text = course.code
-            text_course_slot.text = course.slot
-            text_course_venue.text = course.venue + course.room
-            text_course_teacher.text = course.teacher
+            text_enroll_course_name.text = course.title
+            text_enroll_course_code.text = course.code
+            text_enroll_course_slot.text = course.slot
+            text_enroll_course_venue.text = course.venue + course.room
+            text_enroll_course_teacher.text = course.teacher
 
             txt_btn_enroll.setOnClickListener {
                 val webService = WebService.create()
                 val prefs = PreferenceHelper.defaultPrefs(context)
                 val token: String? = prefs[Constants.PREF_TOKEN]
-                var call= webService.enrollStudent("jwt $token", CourseId(course.id))
+                var call= webService.enrollStudent("jwt $token", course.id)
                 call.enqueue(object : Callback<Class> {
                     override fun onFailure(call: Call<Class>?, t: Throwable?) {
                         context.toast("Error occurred")

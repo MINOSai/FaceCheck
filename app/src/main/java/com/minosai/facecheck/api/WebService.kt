@@ -31,28 +31,35 @@ interface WebService {
 
     @Multipart
     @POST("photo/")
-    fun teacherUploadPhoto(@Header("Authorization") token: String, @Part image: MultipartBody.Part, @Body courseId: CourseId): Call<UploadResponse>
+    fun teacherUploadPhoto(@Header("Authorization") token: String, @Part image: MultipartBody.Part, @Part courseId: MultipartBody.Part): Call<UploadResponse>
 
     @Multipart
     @POST("photo/")
     fun studentUploadPhoto(@Header("Authorization") token: String, @Part image: MultipartBody.Part): Call<UploadResponse>
 
+    @GET("photo/")
+    fun getPhotoList(@Header("Authorization") token: String): Call<List<UploadResponse>>
+
     @GET("course/")
     fun getCourses(@Header("Authorization") token: String): Call<List<Class>>
+
+    @POST("course/")
+    fun addCourse(@Header("Authorization") token: String, @Body course: AddCourse): Call<Class>
 
     @GET("course/all/")
     fun getAllCourses(@Header("Authorization") token: String): Call<List<Class>>
 
-    @PATCH("course/")
-    fun enrollStudent(@Header("Authorization") token: String, @Body courseId: CourseId): Call<Class>
+    @PATCH("course/{id}/")
+    fun enrollStudent(@Header("Authorization") token: String, @Path("id") courseId: Int): Call<Class>
 
-    @GET("student")
+    @GET("student/")
     fun getStudentList(@Header("Authorization") token: String, @Body courseId: CourseId): Call<List<Student>>
 
     companion object {
+//        192.168.43.40:8000/api
         fun create(): WebService {
             val retrofit = Retrofit.Builder()
-                    .baseUrl("http://10.0.2.2:8000/api/")
+                    .baseUrl("http://192.168.43.40:8000/api/")
                     .addConverterFactory(GsonConverterFactory.create())
                     .build()
 

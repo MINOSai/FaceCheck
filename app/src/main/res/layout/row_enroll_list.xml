@@ -29,7 +29,7 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/text_course_name"
+                    android:id="@+id/text_enroll_course_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="16dp"
@@ -41,7 +41,7 @@
                     android:textAppearance="@android:style/TextAppearance.Material.Large" />
 
                 <TextView
-                    android:id="@+id/text_course_code"
+                    android:id="@+id/text_enroll_course_code"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="16dp"
@@ -60,10 +60,11 @@
                     android:layout_marginRight="16dp"
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="16dp"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:visibility="gone">
 
                     <TextView
-                        android:id="@+id/text_course_venue"
+                        android:id="@+id/text_enroll_course_venue"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -75,7 +76,7 @@
                         android:textAppearance="@android:style/TextAppearance.Material.Small" />
 
                     <TextView
-                        android:id="@+id/text_course_slot"
+                        android:id="@+id/text_enroll_course_slot"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -88,7 +89,7 @@
                 </LinearLayout>
 
                 <TextView
-                    android:id="@+id/text_course_teacher"
+                    android:id="@+id/text_enroll_course_teacher"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="16dp"
@@ -105,9 +106,10 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical">
 
-                <view
+                <View
                     android:layout_width="match_parent"
-                    android:layout_height="0.5dp"></view>
+                    android:layout_height="0.5dp"
+                    android:background="@android:color/darker_gray"></View>
 
                 <TextView
                     android:id="@+id/txt_btn_enroll"

@@ -21,9 +21,10 @@
             </intent-filter>
         </activity>
         <activity android:name=".ui.auth.AuthActivity" />
-        <activity android:name=".ui.students.StudentListActivity" />
+        <activity android:name="com.minosai.facecheck.ui.main.students.StudentListActivity" />
         <activity android:name=".ui.main.fragments.student.enroll.EnrollActivity" />
-        <activity android:name=".ui.main.fragments.student.photos.StudentPhotoActivity"></activity>
+        <activity android:name=".ui.main.fragments.student.photos.StudentPhotoActivity" />
+        <activity android:name=".ui.main.fragments.teacher.addcourse.AddCourseActivity"></activity>
     </application>
 
 </manifest>

@@ -13,7 +13,7 @@ import kotlinx.android.synthetic.main.row_image_student.view.*
  */
 class PhotoListAdapter : RecyclerView.Adapter<PhotoListAdapter.PhotoHolder>() {
 
-    private var photoUrlList: List<String> = emptyList()
+    private var photoUrlList: MutableList<String> = mutableListOf()
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int) = PhotoListAdapter.PhotoHolder(parent!!.inflate(R.layout.row_image_student))
 
@@ -27,7 +27,7 @@ class PhotoListAdapter : RecyclerView.Adapter<PhotoListAdapter.PhotoHolder>() {
         }
     }
 
-    fun replaceImtes(photoUrlList: List<String>){
+    fun replaceItems(photoUrlList: MutableList<String>){
         this.photoUrlList = photoUrlList
         notifyDataSetChanged()
     }

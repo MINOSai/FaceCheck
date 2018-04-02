@@ -50,10 +50,15 @@ class SignupFragment : Fragment() {
     }
 
     private fun signup() {
+        toast(radio_group.checkedRadioButtonId.toString())
+        var isTch = true
+        when(radio_group.checkedRadioButtonId) {
+            R.id.radio_student -> isTch = false
+        }
         var call = webService.createUser(UserCreate(
                 input_regno.text.toString(),
                 input_password.text.toString(),
-                radio_student.isChecked,
+                isTch,
                 input_email.text.toString(),
                 input_first_name.text.toString(),
                 input_last_name.text.toString()
